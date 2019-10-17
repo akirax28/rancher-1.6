@@ -8,6 +8,9 @@ services:
       - MYSQL_USER=rancher
       - MYSQL_PASSWORD=rancher
       - MYSQL_ROOT_PASSWORD=rancher
+    ports:
+      - 8086:8080
+      - 9345:9345
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -19,6 +22,7 @@ services:
         limits:
           cpus: '1.50'
           memory: 512M
+          
   rancher:
     image: rancher/server
     environment:
