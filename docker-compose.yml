@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_DATABASE=rancher
+      - MYSQL_USER=rancher
+      - MYSQL_PASSWORD=rancher
+      - MYSQL_ROOT_PASSWORD=rancher
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - mariadb
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1.50'
+          memory: 512M
+  rancher:
+    image: rancher/server
+    environment:
+      - db-host=rancher
+      - db-port=3306
+      - db-user=rancher
+      - db-pass=rancher
+      - db-name=rancher
+
+volumes:
+  mariadb:
+
+networks:
+  mariadb:
+    driver: overlay
